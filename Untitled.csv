@@ -1,0 +1,40 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2708
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fmodern\fcharset0 Courier;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
+\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs36 \cf0 \expnd0\expndtw0\kerning0
+"rt","stimulus","response","trial_type","trial_index","time_elapsed","internal_node_id","item_width_mm","item_height_mm","item_width_px","px2mm","view_dist_mm","item_width_deg","px2deg","scale_factor","win_width_deg","win_height_deg","rt1","rt2","rt3","rt4","rt5","rt6","rt7","rt8","rt9","rt10","rt11","rt12","rt13","rt14","rt15","word1","word2","word3","word4","word5","word6","word7","word8","word9","word10","word11","word12","word13","word14","word15","uil_save","id","string","correct_response","correct"\
+"735","<h1>Dear participant,</h1><h2>Welcome in this experiment.</h2><p>First you will see some information about the experiment and what type of data we will be collecting and why. You can then consent to participate in the experiment (or not, in which case the experiment will terminate immediately and no data will be saved).</p><p>Next, you will fill out a short questionnaire. After the questionnaire you will get some more instructions on what to do.</p><p>Press the spacebar to continue.</p>"," ","html-keyboard-response","0","749","0.0-0.0","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""\
+"5371","","","virtual-chinrest","1","6120","0.0-1.0","85.6","53.98","886.6961476321266","10.356611004343238","274.35","17.73392295264253","50","0.2819455127527184","33.6","8.86","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""\
+"1795","\
+    <p>If the measurements were done correctly, the square below should be 10 cm x 10 cm.</p>\
+    <div style=""background-color: black; width: 500px; height: 500px; margin: 20px auto;""></div>\
+  ","0","html-button-response","2","7916","0.0-2.0","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""\
+"","","","spr-moving-window","3","8788","0.0-3.0-0.0","","","","","","","","","","","870","NaN","NaN","NaN","-1","-1","-1","-1","-1","-1","-1","-1","-1","-1","-1","+","","","","","","","","","","","","","","","false","","","",""\
+"","","","spr-moving-window","4","10347","0.0-3.0-1.0","","","","","","","","","","","193","149","150","151","150","164","210","105","120","164","-1","-1","-1","-1","-1","As","much","as","seventy","","","","","","","","","","","","true","practice","As much as seventy years ago, in the city of ","",""\
+"","","","spr-moving-window","5","10527","0.0-3.0-0.1","","","","","","","","","","","178","NaN","NaN","NaN","-1","-1","-1","-1","-1","-1","-1","-1","-1","-1","-1","+","","","","","","","","","","","","","","","false","","","",""\
+"","","","spr-moving-window","6","11997","0.0-3.0-1.1","","","","","","","","","","","164","165","164","149","179","164","165","149","164","-1","-1","-1","-1","-1","-1","Boston,","there","lived","a","","","","","","","","","","","","true","practice","Boston, \
+ \
+there lived a small girl who had the ","",""\
+"","","","spr-moving-window","7","12148","0.0-3.0-0.2","","","","","","","","","","","149","NaN","NaN","NaN","-1","-1","-1","-1","-1","-1","-1","-1","-1","-1","-1","+","","","","","","","","","","","","","","","false","","","",""\
+"","","","spr-moving-window","8","12838","0.0-3.0-1.2","","","","","","","","","","","178","167","179","165","-1","-1","-1","-1","-1","-1","-1","-1","-1","-1","-1","naughty","habit","of","running","","","","","","","","","","","","true","practice","naughty habit of running \
+","",""\
+"1393","In which city did the girl live in?","0","html-button-response","9","14232","0.0-4.0-0.0","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","0","true"\
+"388","Who buttoned the girls\'92 dress?","0","html-button-response","10","14620","0.0-4.0-0.1","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","0","true"\
+"418","What did the girl\'92s playmates shared with her when she was hungry?","0","html-button-response","11","15038","0.0-4.0-0.2","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","0","true"\
+"400","What came to the girl when she sat on some door-steps?","0","html-button-response","12","15438","0.0-4.0-0.3","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","0","true"\
+"390","What did the town crier had in his hand?","0","html-button-response","13","15828","0.0-4.0-0.4","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","0","true"\
+"620","When the girl\'92s parents hire the town crier to find her?","0","html-button-response","14","16448","0.0-4.0-0.5","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","0","true"\
+"531","What was the description of the girl by the town crier?","0","html-button-response","15","16980","0.0-4.0-0.6","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","0","true"\
+"354","Why did the girl crawled into the engine-room when she was two years old?","0","html-button-response","16","17334","0.0-4.0-0.7","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","0","true"\
+"508","How did the girl feel about making her mother worry?","0","html-button-response","17","17842","0.0-4.0-0.8","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","0","true"\
+"468","What did Mrs. Alcott do after reading the girl\'92s stories?","0","html-button-response","18","18310","0.0-4.0-0.9","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","0","true"\
+"414","What did the girl do as she was anxious to do something to help during the Civil War?","0","html-button-response","19","18724","0.0-4.0-0.10","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","0","true"\
+"428","When did her book begin to sell well?","0","html-button-response","20","19152","0.0-4.0-0.11","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","0","true"\
+"13234","<p>The average RT is 161.2173913043478\
+ Correct </p>"," ","html-keyboard-response","21","32386","0.0-5.0","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""\
+"510","The trial has ended. "," ","html-keyboard-response","22","32897","0.0-6.0","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""}

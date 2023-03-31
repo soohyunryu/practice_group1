@@ -1,0 +1,82 @@
+//file -> input
+//create arr, create func to read input
+/*
+
+var story_one_arr = []
+var read_input_func = function(){
+    const f = require('fs');
+    const readline = require('readline');
+    var user_file = './story_one.txt';
+    var r = readline.createInterface({
+        input: f.createReadStream(user_file)
+    });
+    r.on('line', function (text){
+        story_one_arr.push(text);
+    })    
+}
+*/
+
+//trial to read input from read_input_func
+/*
+var read_input_trial = {
+    type: jsPsychCallFunction,
+    func: read_input_func
+}
+timeline.push(read_input_trial)
+*/
+
+//syncReadFile to read file
+/*
+function syncReadFile(filename) {
+    const contents = readFileSync(filename, 'utf-8');
+  
+    const arr = contents.split(/\r?\n/);
+  
+    console.log(arr); 
+  
+    return arr;
+}
+*/
+
+
+//rn display stories as html-keyboard-response. later, add it in as SPR moving window.
+/*
+const story_one_as_html = {
+    type: jsPsychHtmlKeyboardResponse,
+    stimulus: story_one.txt
+}
+timeline.push(story_one_as_html);
+*/
+
+
+//array of words 
+/*
+//var story_one_arr = syncReadFile('story_one.txt');
+var story_one_arr = ["This is the first sentence. Story one part one.", "This is the second sentence. Story one part two.", "This is the third sentence. Story one part three.", story_one_text];
+var counter = 0;
+
+//turn array -> variables
+
+var some_trial = {
+    type: jsPsychHtmlKeyboardResponse,
+    stimulus: function(){
+        return "<p>" + story_one_arr[counter++] + "</p>";
+    }
+}
+
+for (let i = 0; i < story_one_arr.length; i++){
+    timeline.push(some_trial);
+}
+*/
+
+
+
+/*
+    ,on_finish: function(data){
+        div_width_px = data.item_width_px;
+        //div_height_deg = data.item_height_deg;
+        var computed_font_size = window.getComputedStyle(document.getElementByTagName("div")).width;
+        alert(computed_font_size);
+        
+*/
+
