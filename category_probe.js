@@ -1,33 +1,14 @@
-
 var jsPsych = initJsPsych({
-    show_progress_bar:true,
+    show_progress_bar:false,
     auto_update_progress_bar: true,
     on_finish: function() {
-        //jsPsych.data.displayData('csv');
     }
 })
-
+//console.error(jsPsych.display_element)
 
 timeline = []
-/* init connection with pavlovia.org 
-var pavlovia_init = {
-	type: jsPsychPavlovia,
-	command: "init"
-};
-timeline.push(pavlovia_init);*/
-
-
-//INTRODUCTION AND FULLSCREEN
-/*
-const welcome = {
-    type: jsPsychHtmlKeyboardResponse,
-    stimulus: 'Welcome to the experiment! Press any key to begin.'
-}
-timeline.push(welcome);
-*/
 
 const KEY_CODE_SPACE = ' ';
-const G_QUESTION_CHOICES = [FALSE_BUTTON_TEXT, TRUE_BUTTON_TEXT];
 
 const welcome = {
   type: jsPsychSurveyHtmlForm,
@@ -37,74 +18,362 @@ const welcome = {
 }
 timeline.push(welcome);
 
-
-
-let welcome_screen = {
-    type : jsPsychHtmlKeyboardResponse,
-    stimulus : WELCOME_INSTRUCTION,
-    choices : [KEY_CODE_SPACE],
-    response_ends_trial : true
-    //on_finish: function (data) {
-    //    data.rt = Math.round(data.rt);
-    //}
+var welcome_screen = {
+    type : jsPsychHtmlButtonResponse,
+     stimulus : WELCOME_INSTRUCTION,
+    choices : ['Continue']
   };
-
 timeline.push(welcome_screen);
 
+const consent = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: CONSENT,
+  //html: '<p><input type="text" id="test-resp-box" name="response" size="20" /></p>',
+  choices : ['Continue']
+}
+timeline.push(consent);
 
 var enter_fullscreen = {
     type: jsPsychFullscreen,
-    fullscreen_mode: true
+    fullscreen_mode: true,
+    on_finish:function(){
+      }
   }
 timeline.push(enter_fullscreen);
 //VIRTUAL CHINREST: RESIZE DATA TO PARTICIPANT SCREEN SIZES AND DISTANCES
 
 
-const get_size = {
+const resize_intro = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: RESIZE_INTRO,
+  choices : ['Continue']
+}
+timeline.push(resize_intro)
+
+
+let get_size = {
     type: jsPsychVirtualChinrest,
     blindspot_reps: 3,
     resize_units: "deg",
     pixels_per_unit: 50,
 };
+//timeline.push(get_size);
 
-timeline.push(get_size);
-
-
-var resized_stimulus = {
-    type: jsPsychHtmlButtonResponse,
-    stimulus: `
-    <p style = 'font-size: 20x;'>If the measurements were done correctly, the square below should be 4" x 4".</p>
-    <div style="background-color: black; width: 500px; height: 500px; margin: 20px auto;"></div>
-    `,
-  choices: ['Continue']
+var continue_page = {
+  type : jsPsychHtmlButtonResponse,
+   stimulus : "Click the button when you are ready to adjust your screen.",
+  choices : ['Continue']
 };
-timeline.push(resized_stimulus);
 
+resize_chance = 2;
+var repeat_resize_stimuli = {
+  timeline: [
+    get_size,
+    {type: jsPsychHtmlButtonResponse,
+    stimulus:  `<div class="row">
+    <p style = 'font-size: 20x;'>If the measurements were done correctly, your card must be bigger than the yellow rectangle and smaller than the green rectangle.</p>
+    <div class="column1"; style="background-color: #FFE333; width: 299.6px; height: 188.93px; margin: 50px auto;"></div> 
+    <div class="column2"; style="background-color: #58D68D; width: 556.4px; height: 350.87px; margin: 20px auto;"></div>
+    </div>`,
+    choices: ['Try again','Continue'],
+    on_finish: function(data) {
+      if (data.response=='0' && resize_chance==1){
+        document.querySelector("#jspsych-content").setAttribute('style', 'transform: scale(1.0);')
+        jsPsych.endExperiment('Sorry, you cannot continue this experiment because we cannot adjust your screen correctly.\n Please press ESC key to discontinue your experiment.');
+      }
+    }}
+  ],    
+  loop_function: function(data){
+    if(data['trials'][1].response == 0){
+        resize_chance-=1;
+        document.querySelector("#jspsych-content").setAttribute('style', 'transform: scale(1.0);')
+        return true; // loop again!
+    } else {
+        return false; // continue
+    }
 
-//CALCULATE amount of characters to display on screen
-//INSTRUCTIONS
-/*
-const instructions = {
-    type: jsPsychHtmlKeyboardResponse,
-    stimulus: `
-    <p>This experiment requires three-time visits. </p>
-    <p>On each visit, you will read four stories, each of which is followed by 12 comprehension questions.</p>
-    <p>Completion of comprehension questions with at least 75% accuracy will result in a reward of $3.</p><br>
-    <p>This will be a self-paced reading task. You will see each set of sentences on the screen filled with dashes. Press SPACE to advance to the next word.</p>
-    <p> Press any key to begin</p>
-    `
+  }
 }
-timeline.push(instructions);
-*/
-/*
-const instructions = {
-  type : jsPsychHtmlKeyboardResponse,
-  stimulus : INSTRUCT,
-  choices : [KEY_CODE_SPACE],
-  response_ends_trial : true
+
+timeline.push(repeat_resize_stimuli);
+
+var list_intro = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: LIST_INTRO,
+  choices : ['Continue']
+}
+
+timeline.push(list_intro)
+
+var list_screen = {
+  type : jsPsychImageButtonResponse,
+  stimulus: 'img/words.png',
+  stimulus_height:820,
+  stimulus_width:1680,
+  prompt : function(){
+    var stim = '<p style="font-size:25px;font-weight:bold;">Click the button when you feel familiar with the words and their cateogries</p>';
+       return stim;},
+       //jsPsych.timelineVariable("w1"),
+  choices : ['Continue']
 };
-timeline.push(instructions);
-*/
+
+timeline.push(list_screen);
+
+
+//timeline.push(repeat_resize_stimuli);
+practice_acc = 0
+wm_accuracy = 0
+stimuli_duration = 1000 
+var practice_intro = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: PRACTICE_INTRO,
+  choices : ['Continue'],
+  on_start: function(){
+    practice_acc = 0
+  }
+}
+//timeline.push(practice_intro)
+
+var wm_practice_phase = {timeline: [
+  //Memory Phase
+          {type: jsPsychHtmlKeyboardResponse,
+          stimulus: "",
+          choices: "NO_KEYS",
+          trial_duration: stimuli_duration},
+          {type: jsPsychHtmlKeyboardResponse,
+          stimulus: function(){
+                        var stim = '<p style="font-size:55px;font-weight:bold;">'+jsPsych.timelineVariable('w1')+'</p>';
+                           return stim;},
+          choices: "NO_KEYS",
+          trial_duration: stimuli_duration},
+         {type: jsPsychHtmlKeyboardResponse,
+          stimulus: function(){
+            var stim = '<p style="font-size:55px;font-weight:bold;">'+jsPsych.timelineVariable('w2')+'</p>';
+               return stim;},
+          choices: "NO_KEYS",
+          trial_duration: stimuli_duration},
+         {type: jsPsychHtmlKeyboardResponse,
+          stimulus: function(){
+            var stim = '<p style="font-size:55px;font-weight:bold;">'+jsPsych.timelineVariable('w3')+'</p>';
+               return stim;},
+          choices: "NO_KEYS",
+          trial_duration: stimuli_duration},
+         {type: jsPsychHtmlKeyboardResponse,
+          stimulus: function(){
+            var stim = '<p style="font-size:55px;font-weight:bold;">'+jsPsych.timelineVariable('w4')+'</p>';
+               return stim;},
+          choices: "NO_KEYS",
+          trial_duration: stimuli_duration,},
+         {type: jsPsychHtmlKeyboardResponse,
+          stimulus: function(){
+            var stim = '<p style="font-size:55px;font-weight:bold;">'+jsPsych.timelineVariable('w5')+'</p>';
+               return stim;},
+          choices: "NO_KEYS",
+          trial_duration: stimuli_duration},
+
+          {type: jsPsychHtmlKeyboardResponse,
+            stimulus: " ",
+            choices: "NO_KEYS",
+            trial_duration: 2000},
+
+//Test Phase
+        {type: jsPsychHtmlButtonResponse,
+          stimulus: function(){
+            var stim = '<p style="font-size:55px;font-weight:bold;">'+jsPsych.timelineVariable('probe')+'</p>';
+               return stim;},
+          data: {correctResponse: jsPsych.timelineVariable("cr")},
+          choices: ["Yes", "No"],
+          trial_duration:5000,
+          on_start:function(){
+            jsPsych.pluginAPI.setTimeout(()=>{
+              console.log(document.getElementById('jspsych-content').style);
+              document.getElementById('jspsych-content').style.fontSize = '55px';
+              document.getElementById('jspsych-content').innerHTML = 'Time out.';
+            }, 3000);
+          },
+          on_finish: function(data){
+                                  console.log(data.response)
+                                  if(data.response == null){
+                                    data.correct = null;
+                                  }
+                                  if(data.response == data.correctResponse){
+                                    practice_acc++;
+                                    data.correct = true;
+                                      } 
+                                  if((data.response != null) && (data.response != data.correctResponse)){
+                                    data.correct = false;
+                                        }
+                                  document.getElementById('jspsych-content').style.fontSize ="";
+                                  }
+        },
+
+//Feedback
+        {
+          type: jsPsychHtmlKeyboardResponse,
+          stimulus: function(){
+          var last_trial_correct = jsPsych.data.get().last(1).values()[0].correct;
+          if(last_trial_correct){
+            console.log(last_trial_correct)
+            return '<p style="font-size:55px;font-weight:bold; color:  #5cd65c">Correct!</p>'; // the parameter value has to be returned from the function
+          }
+          if (last_trial_correct==false) {
+            console.log(last_trial_correct)
+            return '<p style="font-size:55px; font-weight:bold; color:  #ff3333">Wrong.</p>'; // the parameter value has to be returned from the function
+          }
+          if (last_trial_correct==null) {
+            console.log(last_trial_correct)
+            return '<p style="font-size:55px;font-weight:bold;">\n Please respond a bit faster.</p>'; // the parameter value has to be returned from the function
+          }
+        },
+        trial_duration: 2000,
+        choices:"NO_KEYS"
+        }
+      ],
+    timeline_variables: working_memory_practice_list_5,
+}
+
+
+var test_intro = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: function(){
+    if (practice_acc > 1){
+      return TEST_INTRO
+    }
+    else{
+      return PRACTICE_INTRO2
+    }
+  },
+  choices : ['Continue']
+}
+//timeline.push(test_intro)
+
+
+var wm_practice_phase_repeat = {timeline: [practice_intro, wm_practice_phase, test_intro],
+  loop_function: function(){
+    if(practice_acc <2){
+        return true; // loop again!
+    } else {
+        return false; // continue
+    }},
+  on_finish: function(){
+    console.error(practice_acc)
+  }
+}
+
+timeline.push(wm_practice_phase_repeat)
+
+
+
+var wm_test_phase = {
+    timeline: [
+      //Memory Phase
+              {type: jsPsychHtmlKeyboardResponse,
+              stimulus: "",
+              choices: "NO_KEYS",
+              trial_duration: stimuli_duration},
+              {type: jsPsychHtmlKeyboardResponse,
+              stimulus: function(){
+                            var stim = '<p style="font-size:55px;font-weight:bold;">'+jsPsych.timelineVariable('w1')+'</p>';
+                               return stim;},
+                               //jsPsych.timelineVariable("w1"),
+              choices: "NO_KEYS",
+              trial_duration: stimuli_duration},
+             {type: jsPsychHtmlKeyboardResponse,
+              stimulus: function(){
+                var stim = '<p style="font-size:55px;font-weight:bold;">'+jsPsych.timelineVariable('w2')+'</p>';
+                   return stim;},
+              choices: "NO_KEYS",
+              trial_duration: stimuli_duration},
+             {type: jsPsychHtmlKeyboardResponse,
+              stimulus: function(){
+                var stim = '<p style="font-size:55px;font-weight:bold;">'+jsPsych.timelineVariable('w3')+'</p>';
+                   return stim;},
+              choices: "NO_KEYS",
+              trial_duration: stimuli_duration},
+             {type: jsPsychHtmlKeyboardResponse,
+              stimulus: function(){
+                var stim = '<p style="font-size:55px;font-weight:bold;">'+jsPsych.timelineVariable('w4')+'</p>';
+                   return stim;},
+              choices: "NO_KEYS",
+              trial_duration: stimuli_duration,},
+             {type: jsPsychHtmlKeyboardResponse,
+              stimulus: function(){
+                var stim = '<p style="font-size:55px;font-weight:bold;">'+jsPsych.timelineVariable('w5')+'</p>';
+                   return stim;},
+              choices: "NO_KEYS",
+              trial_duration: stimuli_duration},
+              {type: jsPsychHtmlKeyboardResponse,
+                stimulus: " ",
+                choices: "NO_KEYS",
+                trial_duration: 2000},
+
+    //Test Phase
+            {type: jsPsychHtmlButtonResponse,
+              stimulus: function(){
+                var stim = '<p style="font-size:55px;font-weight:bold;">'+jsPsych.timelineVariable('probe')+'</p>';
+                   return stim;},
+            data: {correctResponse: jsPsych.timelineVariable("cr")},
+            choices: ["Yes", "No"],
+            on_start:function(){
+              jsPsych.pluginAPI.setTimeout(()=>{
+                console.log(document.getElementById('jspsych-content').style.fontSize);
+                document.getElementById('jspsych-content').style.fontSize = '55px';
+                document.getElementById('jspsych-content').innerHTML = 'Time out.';
+              }, 3000);
+            },
+            trial_duration: 5000,
+            on_finish: function(data){
+                                    console.log(data.response)
+                                    if(data.response == null){
+                                      data.correct = null;
+                                    }
+                                    if(data.response == data.correctResponse){
+                                      wm_accuracy++;
+                                      data.correct = true;
+                                        } 
+                                    if((data.response != null) && (data.response != data.correctResponse)){
+                                      data.correct = false;
+                                          }
+                                    document.getElementById('jspsych-content').style.fontSize ="";
+                                    }
+            }],
+  timeline_variables: working_memory_task_list_5,
+  on_finish: function(){
+    
+  }
+}
+
+timeline.push(wm_test_phase)
+
+var test_ending = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: function(){
+    // The feedback stimulus is a dynamic parameter because we can't know in advance whether
+    // the stimulus should be 'correct' or 'incorrect'.
+    // Instead, this function will check the accuracy of the last response and use that information to set
+    // the stimulus value on each trial.
+    var accuracy_p = Math.round(wm_accuracy*100/24);
+    //return "<p>The average RT and accuracy are "+ average_rt_p+accuracy_p+ "</p>"; // the parameter value has to be returned from the function
+    if (accuracy_p>=75){
+    return `<p style="text-align:left;">
+    The experiment has ended. 
+    Since your accuracy is ` + accuracy_p+` %, your will get $1 as a reward. 
+    <br>
+    Thank you so much for participating in the experiment.
+    <\p>`}
+    else{
+      return `<p style="text-align:left;">
+      The experiment has ended.
+      Since your accuracy is` + accuracy_p+` %, your will get $0.5 as a reward. 
+      <br>
+      Thank you so much for participating in the experiment.
+      <\p>`
+    }
+  },
+  choices:["End the experiment"]
+}
+timeline.push(test_ending)
+
 
 
 let fixcross = {
@@ -117,8 +386,6 @@ let fixcross = {
     height : MIN_HEIGHT,
     trial_duration : FIX_DUR,
     data : {
-    //    id : jsPsych.timelineVariable('id'),
-    //    item_type : 'FIX_CROSS',
         uil_save : false
     },
     on_finish: function(){
@@ -127,28 +394,6 @@ let fixcross = {
 
 };
 
-function append_and_return_ros (splits, total_string, num_chars) {
-    var substr = total_string.substring(0, num_chars);
-    var cut_index;
-    if (substr.length < num_chars || substr.lastIndexOf(" ") == -1){
-        cut_index = substr.length;
-    } else {
-        cut_index = substr.lastIndexOf(" ") + 1;
-    }
-    var substr_worded = substr.slice(0, cut_index);
-    splits.push(substr_worded);
-    return total_string.slice(substr_worded.length);
-}
-
-
-function split_function (char_space, story) {
-    var story_splits = [];
-    var remaining_bit = [story];
-    while (!(remaining_bit[0] === "")) {
-        remaining_bit.push(append_and_return_ros(story_splits, remaining_bit.pop(), char_space));
-    }
-	return story_splits;
-}
 
 let present_text = {type: sprMovingWindow,
   stimulus: jsPsych.timelineVariable('part'),
@@ -168,17 +413,17 @@ let present_text = {type: sprMovingWindow,
 
 
 //===== Story Setup
-practice_story = practice1_split
-practice_story_questions =practice1_questions
+//practice_story = practice1_split
+//practice_story_questions =practice1_questions
 
-first_story =story1_split
-first_story_questions = story1_questions
+//first_story =story1_split
+//first_story_questions = story1_questions
 
-second_story = story2_split
-second_story_questions = story2_questions
+///second_story = story2_split
+// = story2_questions
  
-third_story = story3_split
-third_story_questions  = story3_questions
+//third_story = story3_split
+//third_story_questions  = story3_questions
 
 //===== Practice Phase
 
@@ -189,10 +434,10 @@ const first_story_begins = {
   choices : [KEY_CODE_SPACE],
   response_ends_trial : true
 };
-timeline.push(first_story_begins);
+//timeline.push(first_story_begins);
 
 
-
+/*
 // to track average reading times per word in this phase
 reactiontimes = [];
 var practice_total_rt = [];
@@ -209,27 +454,25 @@ var page_index = 1;
 var ttl_page = practice_story.length;
 
 
-
+/*
 var reading_phase_p = {
   timeline:   //[fixcross,
               [present_text],
   timeline_variables: p,
   on_start: function() {
-      jsPsych.show_progress_bar= false
-      document.getElementById('jspsych-progressbar-container').innerHTML = '<span> <div id="jspsych-progressbar-inner"></div></span>';
-      //jsPsych.setProgressBar(page_index/ttl_page);
-      //page_index++;
+      document.getElementById('jspsych-content').innerHTML = '<p style = "text-align: right; font-size: 24px"> Reading progress: ' +page_index+'/'+ttl_page +'</p>';
+      document.getElementById('jspsych-progressbar-container').innerHTML = '<span style = "text-align: center;" > <div id="jspsych-progressbar-inner" style = "text-align: center;"> </div></span>';
+      page_index++;
     },
   on_finish: function(){
+      document.getElementById('jspsych-progressbar-container').innerHTML = '<span>Completion Progress </span> <div id="jspsych-progressbar-outer"> <div id="jspsych-progressbar-inner"></div></div>';
       practice_total_rt = practice_total_rt.concat(reactiontimes);
       practice_total_wc = practice_total_wc+ reactiontimes.length;
-      
       console.error(reactiontimes);
       console.error(practice_total_rt);
       //console.error(practice_total_rt);
       console.error(practice_total_wc);
       reactiontimes = [];
-      document.getElementById('jspsych-progressbar-container').innerHTML = '<span>Completion Progress</span><div id="jspsych-progressbar-outer"><div id="jspsych-progressbar-inner"></div></div>';
   }}
 
 timeline.push(reading_phase_p);
@@ -271,7 +514,6 @@ var feedback_phase_p = {
     },
     on_finish:function(){
         console.error(reactiontimes);
-        console.error('sdfsdf');
     }
   }
 timeline.push(feedback_phase_p);
@@ -307,7 +549,6 @@ var reading_phase_s1 = {
     timeline_variables: p,
     on_start: function() {
         jsPsych.show_progress_bar= false
-        document.getElementById('jspsych-progressbar-container').innerHTML = '<span> <div id="jspsych-progressbar-inner"></div></span>';
         //jsPsych.setProgressBar(page_index/ttl_page);
         //page_index++;
       },
@@ -356,7 +597,6 @@ var feedback_phase_s1 = {
     },
     on_finish:function(){
         console.error(reactiontimes);
-        console.error('sdfsdf');
     }
   }
 timeline.push(feedback_phase_s1);
@@ -442,7 +682,6 @@ var feedback_phase_s2 = {
     },
     on_finish:function(){
         console.error(reactiontimes);
-        console.error('sdfsdf');
     }
   }
 timeline.push(feedback_phase_s2);
@@ -539,7 +778,7 @@ var pavlovia_init = {
 	type: jsPsychPavlovia,
 	command: "init"
 };
-timeline.push(pavlovia_init);*/
+timeline.push(pavlovia_init);
 
 
 var end = {
@@ -550,4 +789,6 @@ var end = {
         }
 }
 timeline.push(end);
+
+*/
 jsPsych.run(timeline);

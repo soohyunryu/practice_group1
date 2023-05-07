@@ -16,6 +16,7 @@ var jsPsychHtmlButtonResponse = (function (jspsych) {
               pretty_name: "Choices",
               default: undefined,
               array: true,
+              
           },
           /** The HTML for creating button. Can create own style. Use the "%choice%" string to indicate where the label from the choices parameter should be inserted. */
           button_html: {
@@ -74,7 +75,8 @@ var jsPsychHtmlButtonResponse = (function (jspsych) {
       }
       trial(display_element, trial) {
           // display stimulus
-          var html = '<div id="jspsych-html-button-response-stimulus">' + trial.stimulus + "</div>";
+          //display_element.innerHTML = `<div id="content" ></div>`;
+          var html = '<div id="jspsych-html-button-response-stimulus" style="width: 900px; margin: 0 auto;">' + trial.stimulus + "</div>";
           //display buttons
           var buttons = [];
           if (Array.isArray(trial.button_html)) {

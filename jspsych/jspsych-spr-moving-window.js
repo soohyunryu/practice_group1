@@ -170,13 +170,13 @@ var sprMovingWindow = (function(jspsych) {
         }
 
         drawText() {
-            this.ctx.fillText(this.text, this.pos.x, this.pos.y);
+            this.ctx.fillText(' '+this.text+' ', this.pos.x-3, this.pos.y);
         }
 
         drawUnderline() {
             this.ctx.beginPath();
             this.ctx.moveTo(this.pos.x, this.pos.y);
-            this.ctx.lineTo(this.pos.x + this.metrics.width, this.pos.y);
+            this.ctx.lineTo(this.pos.x + this.metrics.width+10, this.pos.y);
             this.ctx.stroke();
         }
 
@@ -357,6 +357,7 @@ var sprMovingWindow = (function(jspsych) {
             liney = BASE_Y + line * delta_y;
             fragments = lines[line].split(RE_CAP_WHITE_SPACE);
             fragments = fragments.filter( word => {return word != "";});
+            console.error(BASE_X,BASE_Y);
             let runningx = BASE_X;
             for (let fragment = 0; fragment < fragments.length; fragment++) {
                 let current_fragment = fragments[fragment];
@@ -364,7 +365,7 @@ var sprMovingWindow = (function(jspsych) {
                 let current_word = new TextInfo(current_fragment, pos, ctx);
                 if (!current_word.isWhiteSpace())
                     words.push(current_word);
-                runningx += current_word.width();
+                runningx += current_word.width()
             }
         }
     }
@@ -482,7 +483,6 @@ var sprMovingWindow = (function(jspsych) {
                 jsPsych.pluginAPI.setTimeout(finish, trial_pars.trial_duration);
             }
         }
-
     }
 
     SprMovingWindowPlugin.info = info;

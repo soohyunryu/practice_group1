@@ -1,19 +1,66 @@
 
-const WELCOME_INSTRUCTION =                                             
+const WELCOME_INSTRUCTION =                               
+    `<p style="text-align:left;">In this experiment, you will be presented with lists of words on the screen one after another.
+    Your job is to determine if a probe word belongs to the same category as one of the words in the list. Your response needs to be made in three seconds. 
+    <br>
+    <br>For example, if you saw [grape, coffee, jacket, purple] in the list of words and "orange" appears on the screen as a probe word, then your answer should be YES because the probe word ‘orange’ shares the same category with  ‘grape’
+    <br>
+    <br>
+    <br>The experiment includes a practice trial and a test trial, and should take around 7 minutes to complete. The base payment for participating is $0.5, and you can earn an additional $0.5 if you achieve 75% accuracy on the test trial.
+    <br> If your response is made after three seconds, then it is considered to be incorrect.
+    <br>
+    <br>If you want to participate, please press the "Continue" button to provide your consent.
+    <p>
+    `
 
-    "<body>"                                                            +
-    "<h3>"                                                              +
-        "Dear participants, welcome to this experiment!"                +
-    "</h3>"                                                             +
-    "<p>"                                                               +
-        "First you will adjust the size of display on your screen."     +
-        "<br> Then, you will be provided four stories to read, each of which will be followed by 12 comprehension questions."  +
-        "<br> You have to achieve X% of accuracy on average to get payment, and your accuracy for each story will be given right after you solve all 12 questions." +
-    "</p>"                                                              +
-    "<style>"                                                           +
-    "p{text-align: left;}"                                             +                                            +                                       +
-    "</style>"                                                          +
-    "</body>";                                                          
+const CONSENT = 
+`<p style="text-align:left;">We guarantee that all the information you provide will be kept confidential and won't be linked to your name. If you ever feel uncomfortable during the study, you're free to leave the laboratory and still receive credit for the time you participated. Moreover, any information you've shared with us will be discarded. If you have any further questions or concerns about this study, you can reach us by email: Soo Ryu at soohyunr@umich.edu. Please sign below to indicate that you understand your rights and agree to participate. Keep in mind that your participation is entirely voluntary, and you're free to withdraw at any time. Additionally, we'll ensure that all the information remains anonymous and won't be linked to any research findings.
+<br>
+<br>  If you would like to give your consent, please proceed by clicking the "Continue" button.
+<p>
+`
+
+const RESIZE_INTRO = 
+`<p style="text-align:left;">Welcome to the experiment! 
+Before we start, let's adjust your screen settings.
+<p>
+`
+
+const LIST_INTRO = 
+`<p style="text-align:left;">
+On the following page, you will see a list of words and their categories that will be used in the experiment. 
+<br>Please review them carefully and ensure that you are familiar with both the words and their categories.
+<\p>
+`
+const PRACTICE_INTRO =
+`<p style="text-align:left;">
+Now, let’s do some practice before moving on to the real experiment.
+This will include three sessions, and each session will include a list of words followed by a probe word. 
+Your task is to determine whether the probe word shares the category with any word you saw in the list. Again, your response needs to be made in three seconds. 
+<br>
+<br>For example, if you saw [grape, coffee, jacket, purple] in the list of words and "orange" appears on the screen as a probe word, then your answer should be YES because the probe word ‘orange’ shares the same category with  ‘grape’
+<br>
+<br> Please press the button when you are ready to begin the practice sessions.
+<\p>
+`
+const PRACTICE_INTRO2 =
+`<p style="text-align:left;">
+Your accuracy in the practice phase is not enough.
+<br>Let's try the practice again so that you can get prepared!
+<\p>
+`
+
+const TEST_INTRO = 
+`<p style="text-align:left;">
+Congratulations, you are now ready to begin the experiment! 
+<br>
+<br>In the experiment, you will be presented with 24 sessions whose procedure is the same as ones you saw durring the practice. 
+Please keep in mind that there won't be any feedback during this phase. Also, you will receive an additional $0.5 as a bonus if you achieve a minimum of 75% accuracy.
+<br>
+<br>Press the button when you are ready to begin. 
+<\p>
+`
+
 
 const PRE_PRACTICE_INSTRUCTION =
     "<h1>"                                                              +

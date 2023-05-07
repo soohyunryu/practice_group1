@@ -16,12 +16,11 @@ var jsPsychFullscreen = (function (jspsych) {
               type: jspsych.ParameterType.HTML_STRING,
               pretty_name: "Message",
               default: `<p style="text-align:left;">The experiment will switch to full screen mode when you press the button below.
-                        
                         <br>If you happend to exit full screen mode, please re-enter full screen mode.
                         <br> You can enter full screen by pressing "F11" on PC or "Control + Command + F" on Mac.
                         <br>Or, you can also press a button at the top of your browser.<p>
                         <style>                                                           
-                        p{text-align: center;}                                                                                                                           +
+                        p{text-align: center;}                                                                                                                           
                         </style>
                         `,
               array: false,
@@ -74,8 +73,10 @@ var jsPsychFullscreen = (function (jspsych) {
       }
       showDisplay(display_element, trial) {
           display_element.innerHTML = `
-      ${trial.message}
-      <button id="jspsych-fullscreen-btn" class="jspsych-btn">${trial.button_label}</button>
+      <div id="jspsych-html-button-response-stimulus" style="width: 900px; margin: 0 auto;"> ${trial.message}</div>
+      <div id="jspsych-html-button-response-btngroup">
+      <div>
+      <button id="jspsych-fullscreen-btn" class="jspsych-btn", style="display: inline-block; margin:50px 8px">${trial.button_label}</button><\div><\div>
     `;
           display_element.querySelector("#jspsych-fullscreen-btn").addEventListener("click", () => {
               this.enterFullScreen();
